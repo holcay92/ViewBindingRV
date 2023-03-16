@@ -1,15 +1,17 @@
 package com.example.viewbindingrv
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.viewbindingrv.databinding.RecyclerviewItemBinding
 
-class MainAdapter : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
+class MainAdapter(private val taskList: List<Task>) :
+    RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
 
-    inner class MainViewHolder(val itemBinding: RecyclerviewItemBinding) :
+    inner class MainViewHolder(private val itemBinding: RecyclerviewItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
-        fun bind(task: Task) {
+        fun bindItem(task: Task) {
             itemBinding.tvTitle.text = task.title
             itemBinding.tvTime.text = task.timeStamp
         }
@@ -17,15 +19,22 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
-        TODO("Not yet implemented")
+        return MainViewHolder(
+            RecyclerviewItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return taskList.size
     }
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val task = taskList[position]
+        holder.bindItem(task)
     }
 
 }
